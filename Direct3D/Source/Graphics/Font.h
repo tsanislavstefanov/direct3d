@@ -6,6 +6,10 @@
 #include "Core/Core.h"
 #include "Math/Vector.h"
 
+////////////////////////////////
+// CHAR INFO ///////////////////
+////////////////////////////////
+
 struct CharInfo
 {
     Vec2 Bearing = Vec2::Zero;
@@ -14,6 +18,10 @@ struct CharInfo
     Vec2 Min = Vec2::Zero;
     Vec2 Max = Vec2::Zero;
 };
+
+////////////////////////////////
+// FONT ////////////////////////
+////////////////////////////////
 
 class Font
 {

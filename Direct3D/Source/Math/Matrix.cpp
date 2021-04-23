@@ -3,7 +3,7 @@
 
 Mat4 Mat4::Ortho(float left, float right, float bottom, float top, float far, float near)
 {
-    Mat4 r(1.0f);
+    Mat4 r = { 1.0f };
 
     const float a = right - left;
     const float b = top   - bottom;
@@ -22,7 +22,7 @@ Mat4 Mat4::Ortho(float left, float right, float bottom, float top, float far, fl
 
 Mat4 Mat4::Translate(const Mat4& m, const Vec3& v)
 {
-    Mat4 r(m);
+    Mat4 r = { m };
 
     r[3] = m[0] * v[0] + m[1] * v[1] + m[2] * v[2] + m[3];
 
@@ -31,7 +31,7 @@ Mat4 Mat4::Translate(const Mat4& m, const Vec3& v)
 
 Mat4 Mat4::Scale(const Mat4& m, const Vec3& v)
 {
-    Mat4 r(m);
+    Mat4 r = { m };
 
     r[0] = m[0] * v[0];
     r[1] = m[1] * v[1];
@@ -42,7 +42,7 @@ Mat4 Mat4::Scale(const Mat4& m, const Vec3& v)
 
 Mat4 Mat4::Transpose(const Mat4& m)
 {
-    Mat4 r(1.0f);
+    Mat4 r = { 1.0f };
 
     r[0][0] = m[0][0];
     r[0][1] = m[1][0];

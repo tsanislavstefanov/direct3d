@@ -9,9 +9,8 @@
     #undef near
 #endif
 
-class Mat4
+struct Mat4
 {
-public:
     static Mat4 Ortho(float left, float right, float bottom, float top, float far, float near);
     static Mat4 Translate(const Mat4& m, const Vec3& v);
     static Mat4 Scale(const Mat4& m, const Vec3& v);
@@ -28,7 +27,7 @@ public:
 
 static Vec4 operator*(const Mat4& lhs, const Vec4& rhs)
 {
-    Vec4 r(0.0f);
+    Vec4 r = { 0.0f };
 
     r += lhs[0] * rhs[0];
     r += lhs[1] * rhs[1];
@@ -40,7 +39,7 @@ static Vec4 operator*(const Mat4& lhs, const Vec4& rhs)
 
 static Mat4 operator*(const Mat4& lhs, const Mat4& rhs)
 {
-    Mat4 r(0.0f);
+    Mat4 r = { 0.0f };
 
     r[0] = lhs[0] * rhs[0][0] + lhs[1] * rhs[0][1] + lhs[2] * rhs[0][2] + lhs[3] * rhs[0][3];
     r[1] = lhs[0] * rhs[1][0] + lhs[1] * rhs[1][1] + lhs[2] * rhs[1][2] + lhs[3] * rhs[1][3];

@@ -4,6 +4,10 @@
 
 #include "Font.h"
 
+////////////////////////////////
+// FONT ////////////////////////
+////////////////////////////////
+
 Font::Font(ID3D11Device* device, const std::string& filename, uint32_t height)
     :
     m_Height(height)

@@ -5,10 +5,18 @@
 #include "Renderer2D.h"
 #include "Core/Core.h"
 #include "Core/Input.h"
-#include "Core/Window.h"
+
+////////////////////////////////
+// GUI /////////////////////////
+////////////////////////////////
 
 GUIContext GUI::s_Context = {};
 GUIStyle GUI::s_Style = {};
+
+const GUIStyle& GUI::GetStyle()
+{
+    return s_Style;
+}
 
 void GUI::SetStyle(const GUIStyle& style)
 {
@@ -29,9 +37,6 @@ void GUI::SetFontSize(uint32_t height)
 
 bool GUI::Button(const Vec2& position, const std::string& text)
 {
-    const OrthoCamera camera(0.0f, (float)s_Context.ViewportWidth, 0.0f, (float)s_Context.ViewportHeight);
-    Renderer2D::BeginScene(camera);
-
     const Ref<Font>& font = Renderer2D::GetFont();
     Vec2 size = Vec2::Zero;
     const float scale = s_Context.FontScale;
@@ -40,33 +45,34 @@ bool GUI::Button(const Vec2& position, const std::string& text)
         const CharInfo& info = font->GetCharInfo(c);
         size += info.Advance * scale;
     }
-
     size += s_Style.Padding * 2.0f;
     const float descent = font->GetDescent();
     size.Y += (font->GetAscent() - descent) * scale;
 
-    const Vec2& mouse_position = Input::GetMousePosition();
-    const Window& window = *Window::Main;
-    Vec2 fixed_mouse_position = mouse_position;
-    fixed_mouse_position.Y = window.GetHeight() - mouse_position.Y;
-
-    const Vec2 bottom_left = position; // Bottom - left.
-    const Vec2 top_right = position + size; // Top - right.
-    Color button_color = s_Style.Colors[GUIColor::Button];
-    bool result = false;
-
-    if (fixed_mouse_position.X >= bottom_left.X && fixed_mouse_position.X <= top_right.X
-        && fixed_mouse_position.Y >= bottom_left.Y && fixed_mouse_position.Y <= top_right.Y)
+    Vec2 mouse_position = Input::GetMousePosition();
+    mouse_position.Y = s_Context.ViewportHeight - mouse_position.Y;
+    Color color = s_Style.Colors[GUIColor::Button];
+    bool is_clicked = false;
+    if (IsPointInRect(mouse_position, { position, position + size }))
     {
-        button_color = s_Style.Colors[GUIColor::ButtonActive];
-        result = true;
+        color = s_Style.Colors[GUIColor::ButtonHovered];
+        if (Input::GetMouseButtonDown(MouseButtonCode::Left))
+            is_clicked = true;
     }
 
-    Renderer2D::DrawQuad(position, size, button_color);
+    const OrthoCamera camera(0.0f, (float)s_Context.ViewportWidth, 0.0f, (float)s_Context.ViewportHeight);
+    Renderer2D::BeginScene(camera);
+    Renderer2D::DrawQuad(position, size, color);
     Vec2 offset = position;
     offset.Y -= descent * scale;
     Renderer2D::DrawText(text, offset + s_Style.Padding, scale, s_Style.Colors[GUIColor::Text]);
     Renderer2D::EndScene();
 
-    return result;
+    return is_clicked;
+}
+
+bool GUI::IsPointInRect(const Vec2& point, const Rect& rect)
+{
+    return point.X > rect.BottomLeft.X && point.X < rect.TopRight.X
+        && point.Y > rect.BottomLeft.Y && point.Y < rect.TopRight.Y;
 }

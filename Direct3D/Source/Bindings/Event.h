@@ -1,11 +1,5 @@
 #pragma once
 
-#include <algorithm>
-#include <cstdint>
-#include <memory>
-#include <utility>
-#include <vector>
-
 ////////////////////////////////
 // DELEGATE ////////////////////
 ////////////////////////////////
@@ -86,16 +80,30 @@ public:
         m_Callbacks.push_back(callback);
     }
 
+    template<typename Lambda>
+    void Disconnect(Lambda& lambda)
+    {
+        Callback callback = {};
+        callback.Bind(lambda);
+        Disconnect(callback);
+    }
+
     template<auto MemFunc, typename Object>
     void Disconnect(Object* object)
     {
         Callback callback = {};
         callback.Bind<MemFunc>(object);
-        const auto end = m_Callbacks.end();
-        m_Callbacks.erase(std::remove(m_Callbacks.begin(), end, std::move(callback)), end);
+        Disconnect(callback);
     }
 private:
     using Callback = Delegate<void(Args...)>;
+
+    void Disconnect(const Callback& callback)
+    {
+        const auto end = m_Callbacks.end();
+        m_Callbacks.erase(std::remove(m_Callbacks.begin(), end, std::move(callback)), end);
+    }
+
     std::vector<Callback> m_Callbacks = {};
 };
 
@@ -135,11 +143,7 @@ public:
         (*static_cast<Signal<Event>*>(m_Signals[index].get()))(event);
     }
 private:
-    static size_t GenerateTypeId()
-    {
-        static size_t next = 0;
-        return next++;
-    }
+    static size_t GenerateTypeId();
 
     template<typename>
     static size_t GetTypeId()

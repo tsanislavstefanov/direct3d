@@ -154,8 +154,6 @@ struct WindowCloseEvent // No event data.
 class Window
 {
 public:
-    static Window* Main;
-
     Window(const WindowProps& props);
 
     uint32_t GetWidth() const;

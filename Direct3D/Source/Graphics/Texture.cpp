@@ -24,7 +24,7 @@ Texture2D::Texture2D(ID3D11Device* device, const std::string& filename)
 {
     uint8_t* pixels = stbi_load(&filename[0], &m_Width, &m_Height, &m_Channels, 4);
 
-    D3D11_TEXTURE2D_DESC t2dd;
+    D3D11_TEXTURE2D_DESC t2dd = {};
     memset(&t2dd, 0, sizeof(D3D11_TEXTURE2D_DESC));
     t2dd.Width = m_Width;
     t2dd.Height = m_Height;
@@ -39,14 +39,14 @@ Texture2D::Texture2D(ID3D11Device* device, const std::string& filename)
 
     t2dd.Usage = D3D11_USAGE_DEFAULT;
     t2dd.BindFlags = D3D11_BIND_SHADER_RESOURCE;
-    D3D11_SUBRESOURCE_DATA srd;
+    D3D11_SUBRESOURCE_DATA srd = {};
     memset(&srd, 0, sizeof(D3D11_SUBRESOURCE_DATA));
     srd.pSysMem = pixels;
     srd.SysMemPitch = m_Width * sizeof(uint8_t) * m_Channels;
     wrl::ComPtr<ID3D11Texture2D> texture2d = nullptr;
     device->CreateTexture2D(&t2dd, &srd, &texture2d);
 
-    D3D11_SHADER_RESOURCE_VIEW_DESC srvd;
+    D3D11_SHADER_RESOURCE_VIEW_DESC srvd = {};
     memset(&srvd, 0, sizeof(D3D11_SHADER_RESOURCE_VIEW_DESC));
     srvd.Format = t2dd.Format;
     srvd.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
@@ -62,7 +62,7 @@ Texture2D::Texture2D(ID3D11Device* device, uint32_t width, uint32_t height, uint
     m_Height(height),
     m_Channels(channels)
 {
-    D3D11_TEXTURE2D_DESC t2dd;
+    D3D11_TEXTURE2D_DESC t2dd = {};
     memset(&t2dd, 0, sizeof(D3D11_TEXTURE2D_DESC));
     t2dd.Width = m_Width;
     t2dd.Height = m_Height;
@@ -77,14 +77,14 @@ Texture2D::Texture2D(ID3D11Device* device, uint32_t width, uint32_t height, uint
 
     t2dd.Usage = D3D11_USAGE_DEFAULT;
     t2dd.BindFlags = D3D11_BIND_SHADER_RESOURCE;
-    D3D11_SUBRESOURCE_DATA srd;
+    D3D11_SUBRESOURCE_DATA srd = {};
     memset(&srd, 0, sizeof(D3D11_SUBRESOURCE_DATA));
     srd.pSysMem = pixels;
     srd.SysMemPitch = m_Width * sizeof(uint8_t) * m_Channels;
     wrl::ComPtr<ID3D11Texture2D> texture2d = nullptr;
     device->CreateTexture2D(&t2dd, &srd, &texture2d);
 
-    D3D11_SHADER_RESOURCE_VIEW_DESC srvd;
+    D3D11_SHADER_RESOURCE_VIEW_DESC srvd = {};
     memset(&srvd, 0, sizeof(D3D11_SHADER_RESOURCE_VIEW_DESC));
     srvd.Format = t2dd.Format;
     srvd.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
@@ -134,8 +134,8 @@ void Texture2D::Bind(ID3D11DeviceContext* device_context, uint32_t slot)
 Ref<SubTexture2D> SubTexture2D::CreateFromCoord(const Ref<Texture2D>& texture, const Vec2& coord, const Vec2& size)
 {
     const uint32_t width = texture->GetWidth(), height = texture->GetHeight();
-    const Vec2 min = Vec2((coord.X * size.X) / width, (coord.Y * size.Y) / height);
-    const Vec2 max = Vec2(((1 + coord.X) * size.X) / width, ((1 + coord.Y) * size.Y) / height);
+    const Vec2 min = { (coord.X * size.X) / width, (coord.Y * size.Y) / height };
+    const Vec2 max = { ((1 + coord.X) * size.X) / width, ((1 + coord.Y) * size.Y) / height };
     return CreateRef<SubTexture2D>(texture, min, max);
 }
 
@@ -165,7 +165,7 @@ const Vec2* SubTexture2D::GetTexCoords() const
 
 Sampler::Sampler(ID3D11Device* device)
 {
-    D3D11_SAMPLER_DESC sd;
+    D3D11_SAMPLER_DESC sd = {};
     memset(&sd, 0, sizeof(D3D11_SAMPLER_DESC));
     sd.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
     sd.AddressU = D3D11_TEXTURE_ADDRESS_CLAMP;

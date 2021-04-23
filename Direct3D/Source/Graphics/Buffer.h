@@ -6,7 +6,7 @@
 
 enum class VertexAttribType
 {
-    UNKNOWN = 0,
+    Unknown = 0,
     FLOAT = 41,
     FLOAT2 = 16,
     FLOAT3 = 6,
@@ -25,7 +25,7 @@ public:
     size_t Offset = 0;
 private:
     std::string m_Name = "";
-    VertexAttribType m_Type = VertexAttribType::UNKNOWN;
+    VertexAttribType m_Type = VertexAttribType::Unknown;
 };
 
 ////////////////////////////////

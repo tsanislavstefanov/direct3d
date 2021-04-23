@@ -45,8 +45,8 @@ void Application::Run()
 
         if (framewatch.GetMilliseconds() >= 1000.0f)
         {
-            const Renderer2D::Stats& stats = Renderer2D::GetStats();
-            LOG_INFO("Quads: {0}, draw calls: {1}", stats.QuadCount, stats.DrawCallCount);
+            const Renderer2DStats& stats = Renderer2D::GetStats();
+            LOG_INFO("Quads: {0} ... draw calls: {1}", stats.QuadCount, stats.DrawCallCount);
             Renderer2D::ResetStats();
 
             Time::s_FrameCount = 0;
@@ -65,20 +65,19 @@ void Application::OnMouseButtonDown(MouseButtonDownEvent& e)
 void Application::OnMouseMoved(MouseMovedEvent& e)
 {
     Input::s_MousePosition = e.Position;
-    LOG_INFO("Mouse.X: {0} ... Mouse.Y: {1}", e.Position.X, e.Position.Y);
 }
 
 void Application::OnKeyDown(KeyDownEvent& e)
 {
     Input::s_KeyStates[e.KeyCode] = true;
 
-    if (e.KeyCode == KeyCode::LEFT_ARROW)
+    if (e.KeyCode == KeyCode::LeftArrow)
         Input::s_AxisRaw.X = -1.0f;
-    if (e.KeyCode == KeyCode::RIGHT_ARROW)
+    if (e.KeyCode == KeyCode::RightArrow)
         Input::s_AxisRaw.Y =  1.0f;
-    if (e.KeyCode == KeyCode::UP_ARROW)
+    if (e.KeyCode == KeyCode::UpArrow)
         Input::s_AxisRaw.W =  1.0f;
-    if (e.KeyCode == KeyCode::DOWN_ARROW)
+    if (e.KeyCode == KeyCode::DownArrow)
         Input::s_AxisRaw.Z = -1.0f;
 }
 
@@ -86,13 +85,13 @@ void Application::OnKeyUp(KeyUpEvent& e)
 {
     Input::s_KeyStates[e.KeyCode] = false;
 
-    if (e.KeyCode == KeyCode::LEFT_ARROW)
+    if (e.KeyCode == KeyCode::LeftArrow)
         Input::s_AxisRaw.X = 0.0f;
-    if (e.KeyCode == KeyCode::RIGHT_ARROW)
+    if (e.KeyCode == KeyCode::RightArrow)
         Input::s_AxisRaw.Y = 0.0f;
-    if (e.KeyCode == KeyCode::UP_ARROW)
+    if (e.KeyCode == KeyCode::UpArrow)
         Input::s_AxisRaw.W = 0.0f;
-    if (e.KeyCode == KeyCode::DOWN_ARROW)
+    if (e.KeyCode == KeyCode::DownArrow)
         Input::s_AxisRaw.Z = 0.0f;
 }
 

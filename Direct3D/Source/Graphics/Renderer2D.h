@@ -19,25 +19,29 @@
 class GraphicsContext;
 
 ////////////////////////////////
+// STATS ///////////////////////
+////////////////////////////////
+
+struct Renderer2DStats
+{
+    uint32_t DrawCallCount = 0;
+    uint32_t QuadCount = 0;
+};
+
+////////////////////////////////
 // RENDERER 2D /////////////////
 ////////////////////////////////
 
 class Renderer2D
 {
 public:
-    struct Stats
-    {
-        uint32_t DrawCallCount = 0;
-        uint32_t QuadCount = 0;
-    };
-
     Renderer2D() = delete;
     Renderer2D(const Renderer2D&) = delete;
 
     Renderer2D& operator=(const Renderer2D&) = delete;
 
     static const Ref<Font>& GetFont();
-    static const Stats& GetStats();
+    static const Renderer2DStats& GetStats();
 
     static void SetFont(const std::string& filename);
     static void SetFont(const Ref<Font>& font);
@@ -45,9 +49,9 @@ public:
     static void Init(const GraphicsContext& graphics_context);
     static void ResetStats();
     static void BeginScene(const Camera& camera);
-    static void DrawQuad(const Vec2& position, const Vec2& scale = Vec2(1.0f), const Color& color = Color::White);
-    static void DrawQuad(const Ref<Texture2D>& texture, const Vec2& position, const Vec2& scale = Vec2(1.0f), const Color& color = Color::White);
-    static void DrawQuad(const Ref<SubTexture2D>& subtexture, const Vec2& position, const Vec2& scale = Vec2(1.0f), const Color& color = Color::White);
+    static void DrawQuad(const Vec2& position, const Vec2& scale = { 1.0f }, const Color& color = Color::White);
+    static void DrawQuad(const Ref<Texture2D>& texture, const Vec2& position, const Vec2& scale = { 1.0f }, const Color& color = Color::White);
+    static void DrawQuad(const Ref<SubTexture2D>& subtexture, const Vec2& position, const Vec2& scale = { 1.0f }, const Color& color = Color::White);
     static void DrawQuad(const Ref<SubTexture2D>& subtexture, const Mat4& transformation, const Color& color = Color::White);
     static void DrawText(const std::string& text, const Vec2& position, uint32_t height = 16, const Color& color = Color::White);
     static void DrawText(const std::string& text, const Vec2& position, float scale, const Color& color = Color::White);

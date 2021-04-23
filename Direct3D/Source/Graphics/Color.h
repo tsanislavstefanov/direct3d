@@ -3,7 +3,7 @@
 class Color
 {
 public:
-    static Color FromHex(uint32_t hex);
+    static Color FromHex(uint32_t hex, uint8_t a = 255);
     static Color FromRGBA(uint8_t r, uint8_t g, uint8_t b, uint8_t a = 255);
 
     static const Color Clear;

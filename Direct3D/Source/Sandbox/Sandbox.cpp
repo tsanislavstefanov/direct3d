@@ -22,10 +22,10 @@ Sandbox::Sandbox(const WindowProps& props)
     GUIStyle style = {};
     memset(&style, 0, sizeof(style));
     style.Padding = 8.0f;
-    style.Colors[GUIColor::Text] = Color(1.00f, 1.00f, 1.00f, 1.00f);
-    style.Colors[GUIColor::Button] = Color::Red;
-    style.Colors[GUIColor::ButtonActive] = Color::Green;
-    style.Colors[GUIColor::ButtonHovered] = Color::FromHex(0x252131);
+    style.Colors[GUIColor::Text] = Color::White;
+    style.Colors[GUIColor::Button] = Color::FromHex(0x1d1c39);
+    // style.Colors[GUIColor::ButtonActive] = Color::from;
+    style.Colors[GUIColor::ButtonHovered] = Color::FromHex(0xff22b1);
     GUI::SetStyle(style);
 }
 
@@ -36,5 +36,8 @@ void Sandbox::OnUpdate()
 
 void Sandbox::OnGUI()
 {
-    GUI::Button({ 100.0f }, "New Button");
+    if (GUI::Button({ 100.0f }, "New Button"))
+    {
+
+    }
 }

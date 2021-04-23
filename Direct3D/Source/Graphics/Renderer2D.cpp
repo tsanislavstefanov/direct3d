@@ -54,7 +54,7 @@ struct Renderer2DData
     Ref<IndexBuffer> IB = nullptr;
     uint32_t IndexCount = 0;
 
-    Renderer2D::Stats Stats = {};
+    Renderer2DStats Stats = {};
 };
 
 static Renderer2DData s_Data = {};
@@ -71,7 +71,7 @@ const Ref<Font>& Renderer2D::GetFont()
     return s_Data.Font;
 }
 
-const Renderer2D::Stats& Renderer2D::GetStats()
+const Renderer2DStats& Renderer2D::GetStats()
 {
     return s_Data.Stats;
 }
@@ -141,7 +141,7 @@ void Renderer2D::Init(const GraphicsContext& graphics_context)
 
 void Renderer2D::ResetStats()
 {
-    memset(&s_Data.Stats, 0, sizeof(Renderer2D::Stats));
+    memset(&s_Data.Stats, 0, sizeof(Renderer2DStats));
 }
 
 void Renderer2D::BeginScene(const Camera& camera)
@@ -276,14 +276,14 @@ void Renderer2D::BeginBatch()
 void Renderer2D::EndBatch()
 {
     if (s_Data.VertexCount <= 0)
-        return; // No Quads to draw.
+        return; // No quads to draw.
 
     s_Data.VB->SetSubData(s_DeviceContext, (float*)s_Data.Vertices, s_Data.VertexCount);
     s_Data.VB->Bind(s_DeviceContext);
 
     for (size_t i = 0; i < MaxTexSlots; i++)
     {
-        const Ref<Texture2D> texture = s_Data.Textures[i];
+        const Ref<Texture2D>& texture = s_Data.Textures[i];
         if (!texture)
             break;
 
@@ -293,6 +293,7 @@ void Renderer2D::EndBatch()
     s_Data.TexSampler->Bind(s_DeviceContext);
     s_Data.TexBlender->Bind(s_DeviceContext);
     s_Data.IB->Bind(s_DeviceContext);
+
     s_DeviceContext->DrawIndexed(s_Data.IndexCount, 0, 0);
 
     s_Data.Stats.DrawCallCount++;

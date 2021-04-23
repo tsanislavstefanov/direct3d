@@ -5,13 +5,8 @@
 // WINDOW //////////////////////
 ////////////////////////////////
 
-Window* Window::Main = nullptr;
-
 Window::Window(const WindowProps& props)
 {
-    // Set main.
-    Main = this;
-
     // Set data.
     m_Data.Width = props.Width;
     m_Data.Height = props.Height;

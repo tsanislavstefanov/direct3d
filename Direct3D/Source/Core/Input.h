@@ -10,10 +10,10 @@ namespace MouseButtonCode
 {
     enum : size_t
     {
-        UNKNOWN = 0x00,
-        LEFT = 0x01,
-        MIDDLE = 0x04,
-        RIGHT = 0x02
+        Unknown = 0x00,
+        Left = 0x01,
+        Middle = 0x04,
+        Right = 0x02
     };
 }
 
@@ -25,21 +25,21 @@ namespace KeyCode
 {
     enum : size_t
     {
-        UNKNOWN = 0x00,
-        LEFT_ARROW = 0x25,
-        UP_ARROW = 0x26,
-        RIGHT_ARROW = 0x27,
-        DOWN_ARROW = 0x28,
-        ALPHA0 = 0x30,
-        ALPHA1 = 0x31,
-        ALPHA2 = 0x32,
-        ALPHA3 = 0x33,
-        ALPHA4 = 0x34,
-        ALPHA5 = 0x35,
-        ALPHA6 = 0x36,
-        ALPHA7 = 0x37,
-        ALPHA8 = 0x38,
-        ALPHA9 = 0x39,
+        Unknown = 0x00,
+        LeftArrow = 0x25,
+        UpArrow = 0x26,
+        RightArrow = 0x27,
+        DownArrow = 0x28,
+        Alpha0 = 0x30,
+        Alpha1 = 0x31,
+        Alpha2 = 0x32,
+        Alpha3 = 0x33,
+        Alpha4 = 0x34,
+        Alpha5 = 0x35,
+        Alpha6 = 0x36,
+        Alpha7 = 0x37,
+        Alpha8 = 0x38,
+        Alpha9 = 0x39,
         A = 0x41,
     };
 }
@@ -57,11 +57,11 @@ public:
     Input& operator=(const Input&) = delete;
 
     static const Vec2& GetMousePosition();
-    static bool GetMouseButtonDown(size_t code);
-    static bool GetMouseButtonUp(size_t code);
+    static bool GetMouseButtonDown(size_t button_code);
+    static bool GetMouseButtonUp(size_t button_code);
     static Vec2 GetAxisRaw();
-    static bool GetKeyDown(size_t code);
-    static bool GetKeyUp(size_t code);
+    static bool GetKeyDown(size_t key_code);
+    static bool GetKeyUp(size_t key_code);
 private:
     static Vec2 s_MousePosition;
     static std::bitset<8> s_MouseButtonStates;

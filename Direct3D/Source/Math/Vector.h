@@ -4,9 +4,8 @@
 // VECTOR 2 ////////////////////
 ////////////////////////////////
 
-class Vec2
+struct Vec2
 {
-public:
     static const Vec2 Zero;
 
     Vec2();
@@ -38,9 +37,8 @@ public:
 // VECTOR 3 ////////////////////
 ////////////////////////////////
 
-class Vec3
+struct Vec3
 {
-public:
     Vec3();
     Vec3(float s);
     Vec3(float x, float y, float z);
@@ -71,9 +69,8 @@ public:
 // VECTOR 4 ////////////////////
 ////////////////////////////////
 
-class Vec4
+struct Vec4
 {
-public:
     static const Vec4 Zero;
 
     Vec4();

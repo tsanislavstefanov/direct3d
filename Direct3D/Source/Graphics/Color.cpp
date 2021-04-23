@@ -1,12 +1,11 @@
 #include "stdafx.h"
 #include "Color.h"
 
-Color Color::FromHex(uint32_t hex)
+Color Color::FromHex(uint32_t hex, uint8_t a)
 {
-    const uint8_t r = (hex >> 24) & 0xff;
-    const uint8_t g = (hex >> 16) & 0xff;
-    const uint8_t b = (hex >>  8) & 0xff;
-    const uint8_t a =  hex        & 0xff;
+    const uint8_t r = (hex >> 16) & 0xff;
+    const uint8_t g = (hex >>  8) & 0xff;
+    const uint8_t b =  hex        & 0xff;
 
     return FromRGBA(r, g, b, a);
 }

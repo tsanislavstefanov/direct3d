@@ -22,8 +22,7 @@ public:
 
 	void Bind(ID3D11DeviceContext* device_context, uint32_t slot = 0);
 private:
-	int m_Width = 0, m_Height = 0;
-	int m_Channels = 0;
+	int m_Width = 0, m_Height = 0, m_Channels = 0;
 	wrl::ComPtr<ID3D11ShaderResourceView> m_ShaderResourceView = nullptr;
 };
 
